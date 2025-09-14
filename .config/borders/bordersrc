@@ -1,2 +1,2 @@
 source "$HOME/.config/themes/current/shellcolors.sh"
-borders active_color=$ACTIVE inactive_color=$INACTIVE width=5.0
+borders active_color=$ACTIVE inactive_color=$INACTIVE width=5.0 style=round hidpi=true
