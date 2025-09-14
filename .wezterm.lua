@@ -1,13 +1,15 @@
 local wezterm = require 'wezterm'
 local mux = wezterm.mux
+local home = os.getenv("HOME")
+local settings = dofile(home .. "/.config/themes/current/luacolors.lua")
 
 local config = {
   -- Appearance
-  color_scheme = "Catppuccin Macchiato",
-  --color_scheme = "Gruvbox dark, medium (base16)",
+  --color_scheme = "Catppuccin Macchiato",
+  color_scheme = settings.scheme,
   macos_window_background_blur = 30,
-  --window_background_opacity = 0.6,
-  --text_background_opacity = 0.6,
+  window_background_opacity = 0.75,
+  text_background_opacity = 0.4,
 
   -- Font
   font = wezterm.font 'JetBrains Mono',

@@ -6,5 +6,6 @@
 # https://felixkratz.github.io/SketchyBar/config/events#events-and-scripting
 
 if [ "$SENDER" = "front_app_switched" ]; then
-  sketchybar --set "$NAME" label="$INFO"
+  sketchybar --animate sin 30 \
+             --set "$NAME" label="$INFO"
 fi

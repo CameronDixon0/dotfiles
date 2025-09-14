@@ -1,0 +1,156 @@
+# This is a demo config to showcase some of the most important commands.
+# It is meant to be changed and configured, as it is intentionally kept sparse.
+# For a (much) more advanced configuration example see my dotfiles:
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+
+source "$HOME/.config/sketchybar/catppuccin.sh"
+#source "$HOME/.config/sketchybar/gruvbox.sh"
+
+##### Bar Appearance #####
+
+sketchybar --bar position=top height=28 margin=7 y_offset=2 blur_radius=30 color=$BAR_BACKGROUND corner_radius=7 border_width=1 border_color=$BORDER shadow=on
+
+##### Changing Defaults #####
+
+default=(
+  padding_left=5
+  padding_right=5
+  icon.font="SF Pro:Bold:14.0"
+  label.font="SF Pro:Bold:14.0"
+  icon.color=0xffffffff
+  label.color=0xffffffff
+  icon.padding_left=4
+  icon.padding_right=4
+  label.padding_left=4
+  label.padding_right=4
+  background.border_color=0x55ffffff
+  background.border_width=1
+  background.corner_radius=5
+  background.height=24
+  background.color=0x18ffffff
+)
+sketchybar --default "${default[@]}"
+
+##### Adding Space Indicators #####
+#SPACE_ICONS=("􀩼 1" "􀎬 2" "􂮢 3" "􀜟 4" "􀇴 5")
+SPACE_ICONS=("-" "-" "-" "-" "-" "-" )
+for i in "${!SPACE_ICONS[@]}"
+do
+  sid="$(($i+1))"
+  space=(
+    space="$sid"
+    icon="${SPACE_ICONS[i]}"
+    icon.padding_left=0
+    icon.padding_right=0
+    label.drawing=off
+    background.height=7
+    background.color=0xffffffff
+    background.border_width=0
+    background.corner_radius=100
+    background.padding_right=20
+    script="$PLUGIN_DIR/space.sh"
+    click_script="yabai -m space --focus $sid"
+  )
+  sketchybar --add space space."$sid" left --set space."$sid" "${space[@]}"
+done
+
+
+sketchybar --add item chevron left \
+           --set chevron icon=􀆊 label.drawing=off background.drawing=off \
+           --add item front_app left \
+           --set front_app icon.drawing=off label.color=$BLUE script="$PLUGIN_DIR/front_app.sh" background.drawing=off color=0xff000000 label.font="SF Pro:Medium:14.0" \
+           --subscribe front_app front_app_switched
+
+sketchybar --add item clock right \
+           --set clock update_freq=10 icon.color=$TEXT_ALT label.font="SF Pro:Medium:14.0" background.drawing=off script="$PLUGIN_DIR/clock.sh" \
+
+#sketchybar --add item coffee right \
+#           --set coffee label="􀸘" label.color=$YELLOW icon.drawing=off background.drawing=off click_script="$PLUGIN_DIR/coffee.sh"
+
+sketchybar --add item battery right \
+           --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" background.drawing=off \
+           --subscribe battery system_woke power_source_change \
+
+sketchybar --add item volume right \
+           --set volume script="$PLUGIN_DIR/volume.sh" background.drawing=off \
+           --subscribe volume volume_change
+
+sketchybar --add bracket systeminfo battery volume coffee \
+           --set background.height=20 background.color=0x33ff0000 \
+
+# Music
+
+sketchybar --add item apple center \
+           --set apple label="􀣺" \
+                       icon.drawing=off \
+                       background.drawing=off \
+                       padding_left=10 \
+                       padding_right=10 \
+                       popup.background.color=0xb0000000 \
+                       popup.background.corner_radius=5 \
+                       popup.align=center \
+                       popup.horizontal=on \
+                       popup.height=100 \
+                       click_script="pmset sleepnow" \
+                       script="$PLUGIN_DIR/music.sh" \
+           --subscribe apple mouse.entered mouse.exited.global \
+
+sketchybar --add item music.cover popup.apple \
+           --set music.cover background.image="/tmp/music_cover.jpg" \
+                            background.image.scale=0.15 \
+                            background.color=0x00000000 \
+                            background.border_color=0x00000000 \
+                            script="$PLUGIN_DIR/music.sh" \
+                            updates=on \
+
+sketchybar --add item music.title popup.apple \
+           --set music.title padding_left=0 padding_right=0 width=0 y_offset=35
+
+sketchybar --add item music.album popup.apple \
+           --set music.album padding_left=0 padding_right=0 width=0 y_offset=17.5 label.font="SF Pro:Medium:12.0" label.color=0xffbbbbbb
+
+sketchybar --add item music.artist popup.apple \
+           --set music.artist padding_left=0 padding_right=0 width=0 label.font="SF Pro:Medium:12.0" label.color=0xffbbbbbb
+
+### Music Controls ###
+
+sketchybar --add item music.back popup.apple \
+           --set music.back icon="􀊉" \
+                            background.drawing=off \
+                            background.border_color=0x00000000 \
+                            label.drawing=off \
+                            padding_left=50 \
+                            padding_right=8 \
+                            script="$PLUGIN_DIR/music.sh" \
+                            y_offset=-30 \
+           --subscribe music.back mouse.clicked \
+
+sketchybar --add item music.pause popup.apple \
+           --set music.pause icon="􀊕" \
+                             background.drawing=off \
+                             background.border_color=0x00000000 \
+                             label.drawing=off \
+                             padding_left=8 \
+                             padding_right=8 \
+                             script="$PLUGIN_DIR/music.sh" \
+                             updates=on \
+                            y_offset=-30 \
+           --subscribe music.pause mouse.clicked \
+
+sketchybar --add item music.next popup.apple \
+           --set music.next icon="􀊋" \
+                            background.drawing=off \
+                            background.border_color=0x00000000 \
+                            label.drawing=off \
+                            padding_left=8 \
+                            padding_right=50 \
+                            script="$PLUGIN_DIR/music.sh" \
+                            y_offset=-30 \
+           --subscribe music.next mouse.clicked \
+
+sketchybar --add bracket music music.back music.pause music.forward \
+           --set music background.color=0x00000000 \
+                       background.drawing=off \
+                       align=center
+
+sketchybar --update

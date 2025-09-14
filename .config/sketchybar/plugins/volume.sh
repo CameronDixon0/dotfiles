@@ -3,16 +3,15 @@
 # The volume_change event supplies a $INFO variable in which the current volume
 # percentage is passed to the script.
 
-BDCLI="/usr/local/bin/betterdisplaycli"
+M1DDC="/usr/local/bin/m1ddc"
 
 if [ "$SENDER" = "volume_change" ]; then
   VOLUME="$INFO"
 else
   VOLUME=$(osascript -e 'output volume of (get volume settings)' 2>/dev/null)
 
-  # Fallback to BetterDisplay if it's missing or not a number
   if ! echo "$VOLUME" | grep -qE '^[0-9]+$'; then
-    VOLUME=$("$BDCLI" get -ddc -value -vcp=audioSpeakerVolume -displayWithMainStatus)
+    VOLUME=$("$M1DDC" display 1 get volume 2>/dev/null | grep -o '[0-9]\+')
   fi
 fi
 
@@ -26,4 +25,4 @@ case "$VOLUME" in
   *) ICON="􀊢"
 esac
 
-sketchybar --set "$NAME" icon="$ICON" label="$VOLUME%"
+sketchybar --set "$NAME" icon="$ICON" label="$VOLUME%" padding_left=10
