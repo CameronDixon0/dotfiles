@@ -12,13 +12,13 @@ fi
 case "${PERCENTAGE}" in
   9[0-9]|100) ICON="􀛨" COLOR=$BATTERY_FULL
   ;;
-  [6-8][0-9]) ICON="􀺸" COLOR=$GREEN
+  [6-8][0-9]) ICON="􀺸" COLOR=$BATTERY_HIGH
   ;;
-  [3-5][0-9]) ICON="􀺶" COLOR=$YELLOW
+  [3-5][0-9]) ICON="􀺶" COLOR=$BATTERY_MID
   ;;
-  [1-2][0-9]) ICON="􀛩" COLOR=$ORANGE
+  [1-2][0-9]) ICON="􀛩" COLOR=$BATTERY_LOW
   ;;
-  *) ICON="􀛪" COLOR=$RED
+  *) ICON="􀛪" COLOR=$BATTERY_EMPTY
 esac
 
 if [[ "$CHARGING" != "" ]]; then
