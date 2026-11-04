@@ -1,30 +1,29 @@
 #!/bin/sh
-
-source "$HOME/.config/themes/current/shellcolors.sh"
+# minimal battery — vague colors, no external deps
 
 PERCENTAGE="$(pmset -g batt | grep -Eo "\d+%" | cut -d% -f1)"
 CHARGING="$(pmset -g batt | grep 'AC Power')"
 
-if [ "$PERCENTAGE" = "" ]; then
-  exit 0
-fi
+[ -z "$PERCENTAGE" ] && exit 0
+
+GREEN=0xff7fa563
+CYAN=0xffb4d4cf
+YELLOW=0xfff3be7c
+ORANGE=0xffe0a363
+RED=0xffd8647e
 
 case "${PERCENTAGE}" in
-  9[0-9]|100) ICON="􀛨" COLOR=$BATTERY_FULL
-  ;;
-  [6-8][0-9]) ICON="􀺸" COLOR=$BATTERY_HIGH
-  ;;
-  [3-5][0-9]) ICON="􀺶" COLOR=$BATTERY_MID
-  ;;
-  [1-2][0-9]) ICON="􀛩" COLOR=$BATTERY_LOW
-  ;;
-  *) ICON="􀛪" COLOR=$BATTERY_EMPTY
+  9[0-9]|100) ICON="" COLOR=$GREEN ;;
+  [6-8][0-9]) ICON="" COLOR=$CYAN ;;
+  [3-5][0-9]) ICON="" COLOR=$YELLOW ;;
+  [1-2][0-9]) ICON="" COLOR=$ORANGE ;;
+  *) ICON="" COLOR=$RED ;;
 esac
 
-if [[ "$CHARGING" != "" ]]; then
-  ICON="􀢋"
+if [ -n "$CHARGING" ]; then
+  # U+26A1 + U+FE0E forces text (non-emoji) presentation — portable octal, no encoding issues
+  ICON=$(printf '􀋦')
+  COLOR=$GREEN
 fi
 
-# The item invoking this script (name $NAME) will get its icon and label
-# updated with the current battery status
-sketchybar --set "$NAME" icon="$ICON" label="${PERCENTAGE}%" icon.color="$COLOR" padding_right=10
+sketchybar --set "$NAME" icon="$ICON" icon.color="$COLOR" label="${PERCENTAGE}%" label.color="$COLOR"

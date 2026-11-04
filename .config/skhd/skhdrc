@@ -6,7 +6,9 @@ lalt - 3 : yabai -m space --focus 3
 lalt - 4 : yabai -m space --focus 4
 lalt - 5 : yabai -m space --focus 5
 lalt - 6 : yabai -m space --focus 6
-lalt - 7 : yabai -m space --focus 7
+lalt - s : yabai -m space --focus 7
+lalt - m : yabai -m space --focus 8
+lalt + ctrl - f : yabai -m space --focus 9
 
 shift + lalt - 1 : yabai -m window --space 1
 shift + lalt - 2 : yabai -m window --space 2
@@ -96,14 +98,15 @@ shift + ctrl + lalt - 0x29 : yabai -m window --insert east
 shift + ctrl + lalt - s : yabai -m window --insert stack
 
 # New window in hor./ vert. splits for all applications with yabai
-lalt - s : yabai -m window --insert east;  skhd -k "cmd - n"
-lalt - v : yabai -m window --insert south; skhd -k "cmd - n"
+# lalt - s : yabai -m window --insert east;  skhd -k "cmd - n"
+# lalt - v : yabai -m window --insert south; skhd -k "cmd - n"
 
 # Toggle sketchybar
 shift + lalt - space : sketchybar --bar hidden=toggle
 
 # Open apps
 lalt - t : /Applications/WezTerm.app/Contents/MacOS/wezterm > /dev/null 2>&1
+lalt - b : open -na "Vivaldi"
 
 # Close current window
 lalt - q : yabai -m window --close

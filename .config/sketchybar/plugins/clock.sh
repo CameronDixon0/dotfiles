@@ -1,7 +1,3 @@
 #!/bin/sh
-
-# The $NAME variable is passed from sketchybar and holds the name of
-# the item invoking this script:
-# https://felixkratz.github.io/SketchyBar/config/events#events-and-scripting
-
-sketchybar --set "$NAME" icon="􀉉 $(date +'%a %d. %b')" label="$(date +'%I:%M %p')" padding_right=0 icon.padding_left=10 label.padding_right=10
+# minimal clock — icon "Thu 05 Nov" + label "08:35" (gap matches item gap)
+sketchybar --set "$NAME" icon="$(date '+%a %d %b')" label="$(date '+%H:%M')"

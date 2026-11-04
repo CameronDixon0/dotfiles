@@ -38,12 +38,26 @@ case "$1" in
   "Catppuccin")
     echo "Switching to Catppuccin!"
     cp $THEME_DIR/catppuccin/* $THEME_DIR/current
-    setwall $WALLPAPER_DIR/catppuccin1.jpeg
+    desktoppr $WALLPAPER_DIR/catppuccin1.jpeg
+    # spicetify config current_theme catppuccin
+    # spicetify config color_scheme frappe
+    # spicetify config inject_css 1 inject_theme_js 1 replace_colors 1 overwrite_assets 1
+    # spicetify apply
     ;;
   "Gruvbox")
     echo "Switching to Gruvbox!"
     cp $THEME_DIR/gruvbox/* $THEME_DIR/current
-    setwall $WALLPAPER_DIR/gruvbox1.jpeg
+    desktoppr $WALLPAPER_DIR/gruvbox1.jpeg
+    # spicetify config current_theme Gruvify
+    # spicetify apply
+    ;;
+  "Ayu")
+    echo "Switching to Ayu!"
+    cp $THEME_DIR/ayu/* $THEME_DIR/current
+    ;;
+  "Vague")
+    echo "Switching to Vague!"
+    cp $THEME_DIR/vague/* $THEME_DIR/current
     ;;
   *)
     echo "Invalid theme"
